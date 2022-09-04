@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+    Droid Sans, Helvetica Neue, sans-serif;
+}
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+:root {
+  --primary-400: #378fff;
+  --primary-500: #3069b2;
+}
+
+.f-ai-c {
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  width: min(1228px, 90%);
+  margin-inline: auto;
+}
