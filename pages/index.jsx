@@ -1,5 +1,5 @@
-import Header from "../components/header/Header";
-import Home from "../components/home/Home";
+import Header from "../components/header-component/Header";
+import Home from "../components/home-component/Home";
 
 function MainApp() {
   return (

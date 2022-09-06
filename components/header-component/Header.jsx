@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
-import ModelViewer from "./../home/ModelViewer";
+import Image from "next/image";
 const Header = () => {
   const { isConnected, address } = useAccount();
   const { chain } = useNetwork();
@@ -51,9 +51,7 @@ const Header = () => {
     <div className={styles.container}>
       <div className={styles.logo}>
         <Link href="/">
-          <div className={styles.etherum3D}>
-            <ModelViewer scale="0.0043" modelPath={"/ethereum_3d_logo.glb"} />
-          </div>
+          <Image src="/logo.png" width={70} height={70} alt="Logo" />
         </Link>
       </div>
       <div className={styles.connectionButton}>
