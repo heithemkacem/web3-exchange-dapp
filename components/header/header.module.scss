@@ -1,0 +1,29 @@
+.container {
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(24, 26, 32);
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0 2rem;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+
+  .logo {
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+    color: #fcd535;
+    font-weight: 500;
+    font-size: 1.2rem;
+  }
+  .connectionButton {
+    margin-right: 1rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+}

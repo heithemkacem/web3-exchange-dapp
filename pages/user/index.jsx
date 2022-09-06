@@ -1,7 +1,7 @@
 import Moralis from "moralis";
-import { getSession, signOut } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-
+import styles from "./user.module.css";
 export function makeid(length) {
   var result = "";
   var characters =
@@ -60,11 +60,11 @@ function User({ user, nativeBalance, tokens, nfts }) {
 
   return (
     <div>
-      <h4>User Profile:</h4>
-
-      <pre>{JSON.stringify(user.address, null, 2)}</pre>
-      <pre>{JSON.stringify(nativeBalance, null, 2)}</pre>
-      <pre>{JSON.stringify(tokens, null, 2)}</pre>
+      <pre className={styles.whiteText}>{JSON.stringify(user, null, 2)}</pre>
+      <pre className={styles.whiteText}>
+        {JSON.stringify(nativeBalance, null, 2)}
+      </pre>
+      <pre className={styles.whiteText}>{JSON.stringify(tokens, null, 2)}</pre>
 
       {[...new Set(userNfts)].map((nft) => (
         //if a string end with .mp4 then it is a video,
@@ -85,8 +85,6 @@ function User({ user, nativeBalance, tokens, nfts }) {
           )}
         </div>
       ))}
-
-      <button onClick={() => signOut({ redirect: "/signin" })}>Sign out</button>
     </div>
   );
 }

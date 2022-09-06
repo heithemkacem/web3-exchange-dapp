@@ -1,0 +1,21 @@
+.container {
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(24, 26, 32);
+}
+.container .logo {
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  color: #fcd535;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+.container .connectionButton {
+  margin-right: 1rem;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}/*# sourceMappingURL=header.module.css.map */
