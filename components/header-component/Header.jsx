@@ -1,22 +1,20 @@
 import React from "react";
 import styles from "./header.module.css";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import { useAccount, useSignMessage, useNetwork } from "wagmi";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
-import Image from "next/image";
+import GlitchText from "../glitch-text-component/GlitchText";
+//import Image from "next/image";
 const Header = () => {
   const { isConnected, address } = useAccount();
   const { chain } = useNetwork();
   const { status } = useSession();
   const { signMessageAsync } = useSignMessage();
   const { push } = useRouter();
-  {
-    /* added ConnectButton from metamask */
-  }
 
   useEffect(() => {
     const handleAuth = async () => {
@@ -46,17 +44,18 @@ const Header = () => {
     if (status === "unauthenticated" && isConnected) {
       handleAuth();
     }
+    if (status === "authenticated" && !isConnected) {
+      signOut();
+    }
   }, [status, isConnected]);
   return (
     <div className={styles.container}>
-      <div className={styles.logo}>
-        <Link href="/">
-          <Image src="/logo.png" width={70} height={70} alt="Logo" />
-        </Link>
-      </div>
-      <div className={styles.connectionButton}>
-        <ConnectButton />
-      </div>
+      <Link href="/">
+        <h1 className={styles.logo}>
+          <GlitchText>EXCHANGE </GlitchText>
+        </h1>
+      </Link>
+      <ConnectButton />
     </div>
   );
 };

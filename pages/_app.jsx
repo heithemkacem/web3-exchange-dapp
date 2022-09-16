@@ -1,3 +1,4 @@
+import Layout from "../components/layout-component/Layout";
 import {
   createClient,
   configureChains,
@@ -39,14 +40,16 @@ function MyApp({ Component, pageProps }) {
           coolMode
           chains={chains}
           theme={darkTheme({
-            accentColor: "#FFA500",
+            accentColor: "gray",
             accentColorForeground: "white",
             borderRadius: "small",
             fontStack: "system",
             overlayBlur: "small",
           })}
         >
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </RainbowKitProvider>
       </SessionProvider>
     </WagmiConfig>

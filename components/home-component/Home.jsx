@@ -1,10 +1,16 @@
 import styles from "./home.module.css";
-import ModelViewer from "../3d-model-component/ModelViewer";
+import Header from "../header-component/Header";
+import GlitchText from "../glitch-text-component/GlitchText";
 const Home = () => {
   return (
-    <div className={styles.container}>
-      <ModelViewer scale="2.3" modelPath={"/nft_neymar.glb"} />
-    </div>
+    <>
+      <Header />
+      <div className={styles.container}>
+        <h1>
+          <GlitchText>Exchange Your Crypto </GlitchText>
+        </h1>
+      </div>
+    </>
   );
 };
 

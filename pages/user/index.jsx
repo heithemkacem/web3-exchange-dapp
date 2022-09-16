@@ -59,78 +59,87 @@ function User({ user, nativeBalance, tokens, nfts }) {
   }, []);
 
   return (
-    <div>
-      <pre className={styles.whiteText}>{JSON.stringify(user, null, 2)}</pre>
-      <pre className={styles.whiteText}>
-        {JSON.stringify(nativeBalance, null, 2)}
-      </pre>
-      <pre className={styles.whiteText}>{JSON.stringify(tokens, null, 2)}</pre>
+    <>
+      <div>
+        <img
+          src={`https://avatars.dicebear.com/api/bottts/${user.address}.svg`}
+          height={100}
+          width={100}
+        />
+        <pre className={styles.whiteText}>{JSON.stringify(user, null, 2)}</pre>
+        <pre className={styles.whiteText}>
+          {JSON.stringify(nativeBalance, null, 2)}
+        </pre>
+        <pre className={styles.whiteText}>
+          {JSON.stringify(tokens, null, 2)}
+        </pre>
 
-      {[...new Set(userNfts)].map((nft) => (
-        //if a string end with .mp4 then it is a video,
-        //else it is an image
-        <div>
-          {nft.endsWith(".mp4") ? (
-            <video key={makeid(10)} width="320" height="240" controls>
-              <source src={nft} type="video/mp4" />
-            </video>
-          ) : (
-            <img
-              key={makeid(10)}
-              src={nft}
-              alt="nft"
-              width="320"
-              height="240"
-            />
-          )}
-        </div>
-      ))}
-    </div>
+        {[...new Set(userNfts)].map((nft) => (
+          //if a string end with .mp4 then it is a video,
+          //else it is an image
+          <div>
+            {nft.endsWith(".mp4") ? (
+              <video key={makeid(10)} width="320" height="240" controls>
+                <source src={nft} type="video/mp4" />
+              </video>
+            ) : (
+              <img
+                key={makeid(10)}
+                src={nft}
+                alt="nft"
+                width="320"
+                height="240"
+              />
+            )}
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
-  const { EvmChain } = require("@moralisweb3/evm-utils");
-  const chain = EvmChain.ETHEREUM;
-  await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
-  const address = session.user.address;
-  //Get Native Balance
-  const nativeBalance = await Moralis.EvmApi.account.getNativeBalance({
-    address,
-  });
-  //Get Tokens
-  const tokenBalances = await Moralis.EvmApi.account.getTokenBalances({
-    address,
-    chain,
-  });
-  const tokens = tokenBalances.result.map((token) => token.display());
-  //Get Nfts
-  const nftsBalances = await Moralis.EvmApi.account.getNFTs({
-    address,
-    chain,
-    limit: 10,
-  });
 
-  // Format the output to return name, amount and metadata
+  //if user not logged in, redirect to home page
 
-  //return the name and image from the metadata
   if (!session) {
     return {
       redirect: {
-        destination: "/signin",
+        destination: "/",
         permanent: false,
       },
     };
-  }
-  return {
-    props: {
-      nfts: JSON.parse(JSON.stringify(nftsBalances)),
-      user: session.user,
-      nativeBalance: nativeBalance.result.balance.ether,
-      tokens,
-    },
-  };
-}
+  } else {
+    const { EvmChain } = require("@moralisweb3/evm-utils");
+    const chain = EvmChain.ETHEREUM;
+    await Moralis.start({ apiKey: process.env.MORALIS_API_KEY });
+    const address = session.user.address;
+    //Get Native Balance
+    const nativeBalance = await Moralis.EvmApi.account.getNativeBalance({
+      address,
+    });
+    //Get Tokens
+    const tokenBalances = await Moralis.EvmApi.account.getTokenBalances({
+      address,
+      chain,
+    });
+    const tokens = tokenBalances.result.map((token) => token.display());
+    //Get Nfts
+    const nftsBalances = await Moralis.EvmApi.account.getNFTs({
+      address,
+      chain,
+      limit: 10,
+    });
 
+    return {
+      props: {
+        nfts: JSON.parse(JSON.stringify(nftsBalances)),
+        user: session.user,
+        nativeBalance: nativeBalance.result.balance.ether,
+        tokens,
+      },
+    };
+  }
+}
 export default User;
